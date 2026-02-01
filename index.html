@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox Guest Clicker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1b1d1f;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            user-select: none;
+        }
+
+        .stats-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #00a2ff;
+            text-shadow: 2px 2px #000;
+        }
+
+        .score-text {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .clicker-container {
+            position: relative;
+        }
+
+        #guest-image {
+            width: 300px;
+            cursor: pointer;
+            transition: transform 0.05s active;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
+        }
+
+        #guest-image:hover {
+            transform: scale(1.02);
+        }
+
+        #guest-image:active {
+            transform: scale(0.95);
+        }
+
+        .upgrade-section {
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #00e676;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #00c853;
+        }
+
+        button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stats-container">
+        <h1>Roblox Guest Clicker</h1>
+        <div class="score-text">Clicks: <span id="score">0</span></div>
+        <p>Clicks per click: <span id="per-click">1</span></p>
+    </div>
+
+    <div class="clicker-container">
+        <img id="guest-image" src="https://tr.rbxcdn.com/30DAY-Avatar-C7017FA7EAA82FF26FAF08209A8491C9-Png/720/720/Avatar/Webp/noFilter" alt="Roblox Guest">
+    </div>
+
+    <div class="upgrade-section">
+        <button id="upgrade-btn">Buy Upgrade (Cost: 10)</button>
+    </div>
+
+    <script>
+        let score = 0;
+        let clickValue = 1;
+        let upgradeCost = 10;
+
+        const scoreDisplay = document.getElementById('score');
+        const perClickDisplay = document.getElementById('per-click');
+        const guestImg = document.getElementById('guest-image');
+        const upgradeBtn = document.getElementById('upgrade-btn');
+
+        // Clicking the Guest
+        guestImg.addEventListener('click', () => {
+            score += clickValue;
+            updateDisplay();
+        });
+
+        // Buying an Upgrade
+        upgradeBtn.addEventListener('click', () => {
+            if (score >= upgradeCost) {
+                score -= upgradeCost;
+                clickValue++;
+                upgradeCost = Math.floor(upgradeCost * 1.5);
+                updateDisplay();
+            }
+        });
+
+        function updateDisplay() {
+            scoreDisplay.textContent = score;
+            perClickDisplay.textContent = clickValue;
+            upgradeBtn.textContent = `Buy Upgrade (Cost: ${upgradeCost})`;
+            
+            // Disable button if not enough score
+            upgradeBtn.disabled = score < upgradeCost;
+        }
+
+        // Initial check
+        updateDisplay();
+    </script>
+</body>
+</html>

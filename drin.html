@@ -1,0 +1,425 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080b16">
+<meta name="description" content="DRin - Durian Package Manager. A lightweight Rust-based package manager interface for Ubuntu.">
+<title>DRin — Durian Package Manager</title>
+
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #080b16;
+  --text: #f3f6ff;
+  --muted: #a7b4ce;
+  --cyan: #7cecff;
+  --purple: #b5a1ff;
+  --line: #ffffff18;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  background:
+    radial-gradient(ellipse at 12% 0%, #192d55 0, transparent 36%),
+    radial-gradient(ellipse at 100% 25%, #241746 0, transparent 34%),
+    var(--bg);
+}
+
+a { color: inherit; }
+
+.wrap {
+  width: min(1000px, calc(100% - 36px));
+  margin: auto;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: -.04em;
+  text-decoration: none;
+}
+
+.brand span { color: var(--cyan); }
+
+.navlinks {
+  display: flex;
+  gap: 18px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.navlinks a { text-decoration: none; }
+.navlinks a:hover { color: var(--cyan); }
+
+.hero {
+  padding: 86px 0 72px;
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  gap: 9px;
+  align-items: center;
+  padding: 8px 13px;
+  border: 1px solid #7cecff40;
+  background: #7cecff0c;
+  color: var(--cyan);
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.status {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 12px var(--cyan);
+}
+
+h1 {
+  font-size: clamp(58px, 11vw, 112px);
+  line-height: .9;
+  letter-spacing: -.085em;
+  margin: 27px 0 20px;
+}
+
+.gradient {
+  background: linear-gradient(100deg, #fff 8%, #91edff 48%, #b8a4ff 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtitle {
+  max-width: 650px;
+  margin: 0 auto;
+  color: var(--muted);
+  font-size: clamp(16px, 2.3vw, 20px);
+  line-height: 1.75;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px 38px;
+  border-radius: 15px;
+  background: linear-gradient(100deg, #8ef0ff, #c0b0ff);
+  color: #07111e;
+  text-decoration: none;
+  font-weight: 950;
+  font-size: 18px;
+  letter-spacing: .08em;
+  box-shadow: 0 12px 40px #7cecff24;
+  transition: transform .2s, filter .2s;
+}
+
+.download:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.08);
+}
+
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 23px;
+  border: 1px solid #ffffff28;
+  border-radius: 15px;
+  background: #ffffff08;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.secondary:hover {
+  border-color: #7cecff80;
+  background: #ffffff12;
+}
+
+.fineprint {
+  margin-top: 15px;
+  color: #8795b0;
+  font-size: 12px;
+}
+
+.section {
+  padding: 34px 0 65px;
+}
+
+.section h2 {
+  font-size: 27px;
+  letter-spacing: -.05em;
+  margin: 0 0 10px;
+}
+
+.section-intro {
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 0 0 23px;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.feature {
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: linear-gradient(145deg, #17223aeb, #0e1424ed);
+}
+
+.symbol { font-size: 23px; }
+
+.feature h3 {
+  margin: 14px 0 7px;
+  font-size: 16px;
+}
+
+.feature p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.commands {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  background: #090e1b;
+}
+
+.commands-head {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.commands pre {
+  margin: 0;
+  padding: 20px;
+  overflow-x: auto;
+  color: #c6f5ff;
+  font: 13px/2 ui-monospace, Consolas, monospace;
+}
+
+.note {
+  margin-top: 18px;
+  padding: 17px 19px;
+  border: 1px solid #b5a1ff35;
+  border-radius: 14px;
+  background: #b5a1ff0b;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.note strong { color: var(--text); }
+
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 24px 0 34px;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  color: #8391ad;
+  font-size: 12px;
+}
+
+.footer a {
+  color: var(--cyan);
+  text-decoration: none;
+}
+
+.footer a:hover { text-decoration: underline; }
+
+@media(max-width:700px) {
+  .hero { padding: 65px 0 52px; }
+  .features { grid-template-columns: 1fr; }
+  .navlinks { gap: 11px; font-size: 12px; }
+  .footer { flex-direction: column; }
+}
+
+@media(max-width:420px) {
+  .navlinks a:first-child { display: none; }
+  .download, .secondary { width: 100%; }
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<nav class="nav" aria-label="Main navigation">
+  <a class="brand" href="https://robloxguest12.github.io/">
+    RobloxGuest<span>12</span>
+  </a>
+
+  <div class="navlinks">
+    <a href="#features">Features</a>
+    <a href="#commands">Commands</a>
+    <a href="https://github.com/RobloxGuest12/drin"
+       target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+  </div>
+</nav>
+
+<header class="hero">
+
+  <div class="eyebrow">
+    <span class="status"></span>
+    DRin 0.3.0 · Initial public release
+  </div>
+
+  <h1><span class="gradient">DRin</span></h1>
+
+  <p class="subtitle">
+    Durian Package Manager — a lightweight, Rust-based command-line
+    package manager interface designed primarily for Ubuntu.
+    One simple command line for everyday package tasks.
+  </p>
+
+  <div class="hero-actions">
+    <a class="download"
+       href="https://github.com/RobloxGuest12/drin/releases/download/BETA/drin_0.3.0_amd64.deb">
+       ↓ DOWNLOAD DRin
+    </a>
+
+    <a class="secondary"
+       href="https://github.com/RobloxGuest12/drin"
+       target="_blank" rel="noopener noreferrer">
+       View source on GitHub ↗
+    </a>
+  </div>
+
+  <p class="fineprint">
+    Version 0.3.0 · 64-bit AMD/Intel (.deb) · Ubuntu
+  </p>
+
+</header>
+
+<section class="section" id="features">
+
+  <h2>Package management, simplified.</h2>
+
+  <p class="section-intro">
+    DRin provides a compact CLI for common package-management tasks,
+    with APT doing the actual system package transactions.
+  </p>
+
+  <div class="features">
+
+    <article class="feature">
+      <div class="symbol">⌘</div>
+      <h3>Simple commands</h3>
+      <p>
+        Install, remove, search, inspect, update, upgrade,
+        and clean packages from the terminal.
+      </p>
+    </article>
+
+    <article class="feature">
+      <div class="symbol">⚡</div>
+      <h3>Rust-powered</h3>
+      <p>
+        Built in Rust with a lightweight command-line interface
+        and asynchronous download components.
+      </p>
+    </article>
+
+    <article class="feature">
+      <div class="symbol">↓</div>
+      <h3>Download tools</h3>
+      <p>
+        Includes a custom downloader with adaptive concurrency,
+        retries, progress indicators, and SHA-256 verification.
+      </p>
+    </article>
+
+  </div>
+</section>
+
+<section class="section" id="commands">
+
+  <h2>Quick command examples</h2>
+
+  <p class="section-intro">
+    Run DRin from your Ubuntu terminal.
+    Package-changing operations may request administrator authentication.
+  </p>
+
+  <div class="commands">
+    <div class="commands-head">Ubuntu terminal</div>
+
+    <pre>drin -u                      # Update package lists
+drin -g                      # Upgrade installed packages
+drin -i firefox vlc          # Install packages
+drin -r chrome               # Remove a package
+drin -s fastfetch             # Search for a package
+drin -f virtualbox            # Show package information
+drin -c                      # Clean package cache</pre>
+  </div>
+
+  <div class="note">
+    <strong>Compatibility note:</strong>
+    DRin 0.3.0 is primarily intended for Ubuntu and currently uses
+    APT / apt-get / apt-cache for package operations.
+    Compatibility with other Debian-based distributions may vary.
+    The custom downloader does not replace APT's package transaction
+    or dependency-resolution system.
+  </div>
+
+</section>
+
+<footer class="footer">
+  <span>© <span id="year">2026</span> RobloxGuest12 · DRin</span>
+
+  <span>
+    <a href="https://robloxguest12.github.io/">Back to homepage ↗</a>
+    ·
+    <a href="https://github.com/RobloxGuest12/drin">GitHub repository ↗</a>
+  </span>
+</footer>
+
+</div>
+
+<script>
+document.getElementById('year').textContent =
+  new Date().getFullYear();
+</script>
+
+</body>
+</html>

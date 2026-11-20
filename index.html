@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,13 +18,8 @@
   --line: #ffffff18;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
@@ -38,14 +32,8 @@ body {
     var(--bg);
 }
 
-a {
-  color: inherit;
-}
-
-.wrap {
-  width: min(1080px, calc(100% - 36px));
-  margin: auto;
-}
+a { color: inherit; }
+.wrap { width: min(1080px, calc(100% - 36px)); margin: auto; }
 
 .nav {
   display: flex;
@@ -62,10 +50,7 @@ a {
   text-decoration: none;
 }
 
-.brand span {
-  color: var(--cyan);
-}
-
+.brand span { color: var(--cyan); }
 .nav small {
   color: var(--muted);
   font-size: 12px;
@@ -73,9 +58,7 @@ a {
   text-transform: uppercase;
 }
 
-.hero {
-  padding: 76px 0 45px;
-}
+.hero { padding: 76px 0 45px; }
 
 .tag {
   display: inline-flex;
@@ -280,36 +263,15 @@ h1 {
   text-decoration: none;
 }
 
-.footer a:hover {
-  text-decoration: underline;
-}
+.footer a:hover { text-decoration: underline; }
 
 @media (max-width: 680px) {
-  .hero {
-    padding: 56px 0 28px;
-  }
-
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  .card {
-    min-height: 230px;
-    padding: 22px;
-  }
-
-  .sectionhead {
-    align-items: start;
-    flex-direction: column;
-  }
-
-  .nav small {
-    display: none;
-  }
-
-  .footer {
-    flex-direction: column;
-  }
+  .hero { padding: 56px 0 28px; }
+  .grid { grid-template-columns: 1fr; }
+  .card { min-height: 230px; padding: 22px; }
+  .sectionhead { align-items: start; flex-direction: column; }
+  .nav small { display: none; }
+  .footer { flex-direction: column; }
 }
 </style>
 </head>
@@ -470,6 +432,35 @@ h1 {
 
         <a class="btn" href="https://github.com/RobloxGuest12/drin" target="_blank" rel="noopener noreferrer">
           GitHub ↗
+        </a>
+      </div>
+    </article>
+
+    <!-- Poop.txt -->
+    <article class="card" style="--glow:#b7e36b">
+      <div class="cardtop">
+        <div class="icon" aria-hidden="true">💩</div>
+        <span class="label">Open source · CC0</span>
+      </div>
+
+      <h3>Poop.txt</h3>
+
+      <p>
+        One word. Every generation. An ultra-lightweight plain-text file
+        designed for maximum compatibility. Version 1.0.0 — Initial Release.
+      </p>
+
+      <div class="actions">
+        <a class="btn primary" href="https://robloxguest12.github.io/poop-txt.html">
+          Visit Poop.txt ↗
+        </a>
+
+        <a class="btn" href="https://github.com/RobloxGuest12/Poop.txt" target="_blank" rel="noopener noreferrer">
+          GitHub ↗
+        </a>
+
+        <a class="btn" href="https://github.com/RobloxGuest12/Poop.txt/releases/download/v1.0.0/Poop.txt">
+          Download ↧
         </a>
       </div>
     </article>
